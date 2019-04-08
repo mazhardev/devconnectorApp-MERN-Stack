@@ -10,7 +10,6 @@ const User = require("../../models/user.js");
 //@desc     Tests users route
 //@access   Public
 router.get("/test", (req, res) => res.json({ msg: "Users works" }));
-module.exports = router;
 
 //@route    GET api/users/register
 //@desc     Register User
@@ -44,3 +43,28 @@ router.post("/register", (req, res) => {
     }
   });
 });
+
+//@route    GET api/users/login
+//@desc     User login
+//@access   Public
+
+router.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  //find user by email
+  user.findOne({email}).then(user => {
+    if (!user) {
+      return res.status(404).json({ msg: "Email not found !" });
+    }
+    //check password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        res.json({ Success: "Success" });
+      } else {
+        return res.status(400).json({ password: "Password incorrect" });
+      }
+    });
+  });
+});
+
+module.exports = router;
