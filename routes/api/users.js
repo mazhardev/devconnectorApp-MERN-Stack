@@ -8,6 +8,7 @@ const passport=require('passport');
 //load user model
 const User = require("../../models/user.js");
 const validateRegisterInput=require('../../validator/register');
+const validateLoginInput=require('../../validator//login');
 //@route    GET api/users/test
 //@desc     Tests users route
 //@access   Public
@@ -25,6 +26,7 @@ router.post("/register", (req, res) => {
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
+      //errors.email='Email already exist!'
       return res.status(400).json({ email: "Email already exist!" });
     } else {
       const avatar = gravatar.url(req.body.email, {
@@ -57,12 +59,19 @@ router.post("/register", (req, res) => {
 //@access   Public
 
 router.post("/login", (req, res) => {
+  
+  const {errors,isValid}=validateLoginInput(req.body);
+ //check validation
+  if(!isValid){
+   return res.status(400).json(errors);
+  }
   const email = req.body.email;
   const password = req.body.password;
   //find user by email
   user.findOne({ email }).then(user => {
     if (!user) {
-      return res.status(404).json({ msg: "Email not found !" });
+      errors.email='Email not found !'
+      return res.status(404).json(errors.email);
     }
     //check password
     bcrypt.compare(password, user.password).then(isMatch => {
