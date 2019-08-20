@@ -1,10 +1,15 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Landing from "./components/layout/Landing";
 
 function App() {
   return (
     <div className="App">
-    <h1>My Deveconncetor app</h1>
+      <Navbar />
+      <Landing />
+      <Footer />
     </div>
   );
 }
