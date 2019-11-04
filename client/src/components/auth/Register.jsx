@@ -29,7 +29,7 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-    this.props.registerUser(newUser);
+    this.props.registerUser(newUser,this.props.history);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -123,7 +123,7 @@ class Register extends Component {
     );
   }
 }
-Register.proType = {
+Register.propType = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
