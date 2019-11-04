@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "./authActions";
@@ -32,16 +31,21 @@ class Register extends Component {
     };
     this.props.registerUser(newUser);
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
   render() {
     const { errors } = this.state;
-    const {user}=this.props.auth;
     return (
       <div className="register">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Sign Up</h1>
-              {user ? user.name :null}
               <p className="lead text-center">
                 Create your DevConnector account
               </p>
@@ -119,13 +123,13 @@ class Register extends Component {
     );
   }
 }
-Register.proType={
-  registerUser:PropTypes.func.isRequired,
-  auth:PropTypes.object.isRequired
-}
-const mapState=(state)=>({
-  auth:state.auth
-})
+Register.proType = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapState = state => ({
+  errors: state.auth.errors
+});
 export default connect(
   mapState,
   { registerUser }

@@ -1,14 +1,15 @@
-import { TEST_DISPATCH } from "./authConstants"
+import { TEST_DISPATCH,GET_ERRORS } from "./authConstants"
 const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: {},
+  errors:{}
 };
 export default function(state = initialState, action) {
   switch (action.type) {
-    case TEST_DISPATCH:
+    case GET_ERRORS:
       return{
         ...state,
-        user:action.payload
+        errors:action.payload
       }
     default:
       return state;
