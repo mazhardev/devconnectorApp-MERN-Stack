@@ -1,4 +1,4 @@
-import { TEST_DISPATCH,GET_ERRORS } from "./authConstants"
+import { GET_ERRORS } from "./authConstants"
 const initialState = {
   isAuthenticated: false,
   user: {},
