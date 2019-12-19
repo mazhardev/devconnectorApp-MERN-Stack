@@ -1,4 +1,5 @@
-import { GET_ERRORS } from "./authConstants"
+import { GET_ERRORS,SET_CURRENT_USER } from "./authConstants"
+import isEmpty from '../../app/common/util/validations/is-empty'
 const initialState = {
   isAuthenticated: false,
   user: {},
@@ -11,6 +12,12 @@ export default function(state = initialState, action) {
         ...state,
         errors:action.payload
       }
+    case SET_CURRENT_USER:
+        return{
+          ...state,
+          isAuthenticated:!isEmpty(action.payload),
+          user:action.payload
+        }
     default:
       return state;
   }

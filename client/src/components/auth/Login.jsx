@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import {connect} from "react-redux";
-import {login} from './authActions';
+import { connect } from "react-redux";
+import { login } from './authActions';
 import PropTypes from "prop-types";
 
 class Login extends Component {
@@ -17,6 +17,9 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard')
+    }
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -36,7 +39,7 @@ class Login extends Component {
     };
     // console.log(user);
     this.props.login(user);
-  
+
   }
   render() {
     const { errors } = this.state;
@@ -89,11 +92,12 @@ class Login extends Component {
     );
   }
 }
-Login.propType={
-  login:PropTypes.func.isRequired,
+Login.propType = {
+  login: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
-const mapState=(state)=>({
-errors:state.auth.errors
+const mapState = (state) => ({
+  errors: state.auth.errors,
+  auth: state.auth
 })
-export default connect(mapState,{login})(Login);
+export default connect(mapState, { login })(Login);
