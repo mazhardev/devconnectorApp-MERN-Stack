@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom"
-function Navbar() {
+import { connect } from 'react-redux'
+import PropTypes from "prop-types";
+
+function Navbar({ auth }) {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
       <div className="container">
@@ -27,21 +30,28 @@ function Navbar() {
           </ul>
 
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Sign Up
+            {auth.isAuthenticated ? "":
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">
+                  Sign Up
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
+              </li>}
+            {auth.isAuthenticated ? "":
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
               </Link>
-            </li>
+              </li>}
           </ul>
         </div>
       </div>
     </nav>
   );
 }
-
-export default Navbar;
+Navbar.prototype = {
+  auth: PropTypes.object.isRequired
+}
+const mapState = state => ({
+  auth: state.auth
+})
+export default connect(mapState, null)(Navbar);
