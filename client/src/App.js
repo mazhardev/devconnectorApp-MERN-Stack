@@ -13,13 +13,13 @@ import jwt_decode  from "jwt-decode";
 import setAuthToken from "./app/common/util/setAuthToken";
 import {setCurrentUser} from "./components/auth/authActions";
 
-// Check for token
+//// Check for token
 if (localStorage.jwtToken) {
-  // Set auth token header auth
+//// Set auth token header auth
   setAuthToken(localStorage.jwtToken);
-  // Decode token and get user info and exp
+//// Decode token and get user info and exp
   const decoded = jwt_decode(localStorage.jwtToken);
-  // Set user and isAuthenticated
+//// Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
 }
 class App extends Component {
