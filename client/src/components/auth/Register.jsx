@@ -29,7 +29,12 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-    this.props.registerUser(newUser,this.props.history);
+    this.props.registerUser(newUser, this.props.history);
+  }
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard')
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -128,7 +133,8 @@ Register.propType = {
   auth: PropTypes.object.isRequired
 };
 const mapState = state => ({
-  errors: state.auth.errors
+  errors: state.auth.errors,
+  auth: state.auth
 });
 export default connect(
   mapState,

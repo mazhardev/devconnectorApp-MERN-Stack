@@ -9,18 +9,29 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from './app/store/configureStore';
 
-import jwt_decode  from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import setAuthToken from "./app/common/util/setAuthToken";
-import {setCurrentUser} from "./components/auth/authActions";
+import { setCurrentUser, logout } from "./components/auth/authActions";
 
 //// Check for token
 if (localStorage.jwtToken) {
-//// Set auth token header auth
+  //// Set auth token header auth
   setAuthToken(localStorage.jwtToken);
-//// Decode token and get user info and exp
+  //// Decode token and get user info and exp
   const decoded = jwt_decode(localStorage.jwtToken);
-//// Set user and isAuthenticated
+  //// Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // Logout user
+    // store.dispatch(logout());
+    // TODO: Clear current Profile
+
+    // Redirect to login
+    // window.location.href = '/login';
+  }
 }
 class App extends Component {
   render() {
