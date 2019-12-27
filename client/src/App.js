@@ -15,6 +15,7 @@ import setAuthToken from "./app/common/util/setAuthToken";
 import { setCurrentUser, logout } from "./components/auth/authActions";
 import { clearCurrentProfile } from './components/dashboard/actions';
 import PrivateRout from './app/common/PrivateRoute';
+import CreateProfile from './components/create-profile/CreateProfile';
 
 //// Check for token
 if (localStorage.jwtToken) {
@@ -49,6 +50,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Switch>
                 <PrivateRout exact path="/dashboard" component={Dashboard} />
+                <PrivateRout exact path="/create-profile" component={CreateProfile} />
               </Switch>
             </div>
             <Footer />
