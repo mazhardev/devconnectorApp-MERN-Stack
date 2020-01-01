@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-const EditProfileActions = () => {
+const MyProfileActions = () => {
     return (
         <div className="btn-group mb-4" role="group">
             <Link to="edit-profile" className="btn btn-light">
@@ -15,4 +15,4 @@ const EditProfileActions = () => {
 
     )
 }
-export default EditProfileActions
+export default MyProfileActions

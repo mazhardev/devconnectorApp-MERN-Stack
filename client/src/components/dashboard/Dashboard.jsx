@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from './actions';
 import Spinner from "../../app/common/Spinner"
-import EditProfileActions from "./EditProfileActions"
+import MyProfileActions from "./MyProfileActions"
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -22,8 +22,8 @@ class Dashboard extends Component {
       if (Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
-            <h1 className="lead text-muted">Welcome {<Link to={profile.handle}>{user.name}</Link>}</h1>
-            <EditProfileActions />
+            <h1 className="lead text-muted">Welcome {<Link to={`profile/${profile.handle}`}>{user.name}</Link>}</h1>
+            <MyProfileActions />
           </div>
         )
       } else {
