@@ -18,6 +18,7 @@ import PrivateRout from './app/common/PrivateRoute';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddEducation from './components/dashboard/AddEducation';
+import AddExperience from './components/dashboard/AddExperience';
 
 //// Check for token
 if (localStorage.jwtToken) {
@@ -61,6 +62,9 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRout exact path="/add-education" component={AddEducation} />
+              </Switch>
+              <Switch>
+                <PrivateRout exact path="/add-experience" component={AddExperience} />
               </Switch>
             </div>
             <Footer />
