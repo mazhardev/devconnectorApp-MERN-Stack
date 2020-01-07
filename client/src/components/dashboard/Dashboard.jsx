@@ -6,6 +6,7 @@ import { getCurrentProfile } from './actions';
 import Spinner from "../../app/common/Spinner"
 import MyProfileActions from "./MyProfileActions"
 import Education from "./Education"
+import Experience from "./Experience"
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -26,6 +27,7 @@ class Dashboard extends Component {
             <h1 className="lead text-muted">Welcome {<Link to={`profile/${profile.handle}`}>{user.name}</Link>}</h1>
             <MyProfileActions />
             <Education education={profile.education} />
+            <Experience experience={profile.experience} />
           </div>
         )
       } else {
