@@ -6,7 +6,7 @@ import TextFieldGroup from '../../app/common/TextFieldGroup';
 import TextAreaFieldGroup from '../../app/common/TextAreaFieldGroup';
 import InputGroup from '../../app/common/InputGroup';
 import SelectListGroup from '../../app/common/SelectListGroup';
-import { createProfile } from '../dashboard/profileActions';
+import { createProfile } from '../dashboard/actions';
 
 class CreateProfile extends Component {
   constructor(props) {
