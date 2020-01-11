@@ -1,4 +1,4 @@
-import { GET_ERRORS } from './constants';
+import { GET_ERRORS, CLEAR_ERRORS } from './constants';
 
 const initialState = {
     errors: {}
@@ -9,6 +9,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 errors: action.payload
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                errors: {}
             }
         default:
             return state;
