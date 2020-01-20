@@ -133,7 +133,7 @@ Register.propType = {
   auth: PropTypes.object.isRequired
 };
 const mapState = state => ({
-  errors: state.auth.errors,
+  errors: state.errors.errors,
   auth: state.auth
 });
 export default connect(
