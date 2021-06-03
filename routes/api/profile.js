@@ -1,28 +1,37 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Profile = require("../../models/Profile");
-const passport = require("passport");
-const validateProfileInput = require("../../validator/profile");
-const validateExperienceInput=require("../../validator/experience");
-const validateEducationInput=require("../../validator/education");
-//@route    GET api/profile/test
-//@desc     Tests profile route
-//@access   Public
-router.get("/test", (req, res) => res.json({ msg: "profile works" }));
+const mongoose = require('mongoose');
+const passport = require('passport');
 
-//@route    GET api/profile
-//@desc     Get current user profile
-//@access   Private
+// Load Validation
+const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
+
+// Load Profile Model
+const Profile = require('../../models/Profile');
+// Load User Model
+const User = require('../../models/User');
+
+// @route   GET api/profile/test
+// @desc    Tests profile route
+// @access  Public
+router.get('/test', (req, res) => res.json({ msg: 'Profile Works' }));
+
+// @route   GET api/profile
+// @desc    Get current users profile
+// @access  Private
 router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
+  '/',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const errors = {};
+
     Profile.findOne({ user: req.user.id })
-      .populate("user", ["name", "avatar"])
+      .populate('user', ['name', 'avatar'])
       .then(profile => {
         if (!profile) {
-          errors.noProfile = "There is no profile for this user!";
+          errors.noprofile = 'There is no profile for this user';
           return res.status(404).json(errors);
         }
         res.json(profile);
@@ -92,20 +101,21 @@ router.get('/user/:user_id', (req, res) => {
     );
 });
 
-
-
-//@route    POST api/profile
-//@desc     Create/Update user profile
-//@access   Private
+// @route   POST api/profile
+// @desc    Create or edit user profile
+// @access  Private
 router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
+  '/',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    //check validation
     const { errors, isValid } = validateProfileInput(req.body);
+
+    // Check Validation
     if (!isValid) {
+      // Return any errors with 400 status
       return res.status(400).json(errors);
     }
+
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -118,8 +128,8 @@ router.post(
     if (req.body.githubusername)
       profileFields.githubusername = req.body.githubusername;
     // Skills - Spilt into array
-    if (typeof req.body.skills !== "undefined") {
-      profileFields.skills = req.body.skills.split(",");
+    if (typeof req.body.skills !== 'undefined') {
+      profileFields.skills = req.body.skills.split(',');
     }
 
     // Social
@@ -144,7 +154,7 @@ router.post(
         // Check if handle exists
         Profile.findOne({ handle: profileFields.handle }).then(profile => {
           if (profile) {
-            errors.handle = "That handle already exists";
+            errors.handle = 'That handle already exists';
             res.status(400).json(errors);
           }
 
@@ -286,6 +296,5 @@ router.delete(
     });
   }
 );
-
 
 module.exports = router;
